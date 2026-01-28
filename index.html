@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday ASMITA ❤️</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(to right,#ff9a9e,#fad0c4);
+  color:white;
+  text-align:center;
+  overflow-x:hidden;
+}
+
+/* screens */
+.screen{
+  opacity:0;
+  visibility:hidden;
+  position:absolute;
+  width:100%;
+  min-height:100vh;
+  padding:6vw 4vw;
+  transition:opacity 1.2s ease;
+}
+.screen.active{
+  opacity:1;
+  visibility:visible;
+  position:relative;
+}
+
+/* text sizes (mobile friendly) */
+h1{font-size:7vw;margin-bottom:2vw}
+p{font-size:4.5vw}
+
+@media(min-width:768px){
+  h1{font-size:46px}
+  p{font-size:22px}
+}
+
+/* buttons */
+button{
+  background:white;
+  color:#ff5c8a;
+  border:none;
+  padding:14px 28px;
+  font-size:18px;
+  border-radius:30px;
+  cursor:pointer;
+  margin-top:30px;
+}
+
+/* floating hearts */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  animation:float 6s linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(0);opacity:1;}
+  100%{transform:translateY(-110vh);opacity:0;}
+}
+
+/* cake area */
+.cake-area{
+  position:relative;
+  width:260px;
+  height:260px;
+  margin:40px auto;
+}
+
+/* simple default cake */
+.cake{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  background:#ffc0cb;
+  box-shadow:0 12px 25px rgba(0,0,0,.25);
+  position:relative;
+  cursor:pointer;
+}
+
+/* name on cake */
+.cake-name{
+  position:absolute;
+  right:18px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:20px;
+  font-weight:bold;
+  color:white;
+  text-shadow:2px 2px 6px rgba(0,0,0,.4);
+}
+
+/* candles */
+.candle{
+  position:absolute;
+  width:8px;
+  height:28px;
+  background:white;
+  top:-20px;
+}
+.flame{
+  width:14px;
+  height:14px;
+  background:orange;
+  border-radius:50%;
+  margin-left:-3px;
+  box-shadow:0 0 12px gold;
+}
+.c1{left:105px}
+.c2{left:125px}
+.c3{left:145px}
+
+/* top-view cut */
+.cut-line{
+  position:absolute;
+  width: 4px;
+  height:150px;
+  background:#e75480;
+  top:85px;
+  left:158%;
+  transform:translateX(-50%);
+  display:none;
+}
+
+.slice{
+  position:absolute;
+  width:160px;
+  height: 160px;
+  background:#ffb6c9;
+  clip-path:polygon(0 0,100% 50%,0 100%);
+  top:50px;
+  left:50%;
+  transform-origin:0 0;
+  display:none;
+}
+
+/* popup */
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:.8s;
+}
+.popup.show{
+  opacity:1;
+  pointer-events:auto;
+}
+.popup-box{
+  background:white;
+  color:#ff5c8a;
+  padding:30px 35px;
+  border-radius:22px;
+  font-size:6vw;
+  font-weight:bold;
+  transform:scale(.7);
+  transition:.8s;
+}
+.popup.show .popup-box{
+  transform:scale(1);
+}
+
+/* slideshow */
+.slideshow{
+  width:260px;
+  height:260px;
+  margin:30px auto;
+  position:relative;
+}
+.slide{
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:22px;
+  opacity:0;
+  transition:opacity 1.2s ease;
+}
+.slide.active{opacity:1}
+</style>
+</head>
+
+<body>
+
+<!-- floating hearts -->
+<script>
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(Math.random()*18+14)+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},400);
+</script>
+
+<!-- SCREEN 1 -->
+<div class="screen active" id="screen1">
+  <h1>🎉 Happy Birthday ASMITA ❤️</h1>
+  <p>ENJOY YOUR SPECIAL DAY🥳</p>
+  <button onclick="nextScreen(2)">Next ➡️</button>
+</div>
+
+<!-- SCREEN 2 -->
+<div class="screen" id="screen2">
+  <h1>🎂 Cut the Cake 🎂</h1>
+  <p>Tap the cake 💖</p>
+
+  <div class="cake-area">
+    <div class="candle c1"><div class="flame"></div></div>
+    <div class="candle c2"><div class="flame"></div></div>
+    <div class="candle c3"><div class="flame"></div></div>
+
+    <div class="cake" onclick="cutCake()">
+      <div class="cake-name">ASMITA
+      </div>
+      <div class="tulip t1"></div>
+      <div class="tulip t2"></div>
+      <div class="tulip t3"></div>
+    </div>
+
+    <div class="cut-line" id="cutLine"></div>
+    <div class="slice" id="slice"></div>
+  </div>
+</div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+  <div class="popup-box">
+    🎉 Happy Birthday ASMITA 💖 <br><br>
+    <button onclick="goPhotos()">Next 💕</button>
+  </div>
+</div>
+
+<!-- SCREEN 3 -->
+<div class="screen" id="screen3">
+  <h1>📸 MY DEAR ASMITA 💖</h1>
+
+  <div class="slideshow">
+    <img src="pic1.jpg" class="slide active">
+    <img src="pic2.jpg" class="slide">
+    <img src="pic3.jpg" class="slide">
+    <img src="pic4.jpg" class="slide">
+  </div>
+
+  <p>
+    I hope your day is amazing as you; Always stay happy and keep smiling 🎀
+  </p>
+</div>
+
+<script>
+function nextScreen(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  setTimeout(()=>document.getElementById('screen'+n).classList.add('active'),200);
+}
+
+function cutCake(){
+  document.querySelectorAll('.flame').forEach(f=>f.style.display="none");
+
+  const line=document.getElementById("cutLine");
+  const slice=document.getElementById("slice");
+
+  line.style.display="block";
+  slice.style.display="block";
+  slice.style.transform="translateX(12px) rotate(18deg)";
+
+  setTimeout(()=>{
+    document.getElementById("popup").classList.add("show");
+  },700);
+}
+
+function goPhotos(){
+  document.getElementById("popup").classList.remove("show");
+  nextScreen(3);
+}
+
+let i=0;
+setInterval(()=>{
+  const slides=document.querySelectorAll(".slide");
+  slides.forEach(s=>s.classList.remove("active"));
+  i=(i+1)%slides.length;
+  slides[i].classList.add("active");
+},2500);
+</script>
+
+</body>
+</html>
